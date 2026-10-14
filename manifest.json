@@ -1,0 +1,5 @@
+{
+    "name": "MinerU PDF 处理",
+    "version": "1.5.0",
+    "entry": "plugin_adapter:get_plugin_tab"
+}

@@ -1,0 +1,53 @@
+name: 打包 macOS 版
+
+# 触发方式：
+#   1. 在 GitHub 仓库的 Actions 页面手动点 "Run workflow"
+#   2. 推送形如 v1.5.0 的 tag
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: macOS ${{ matrix.label }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Apple Silicon（M1/M2/M3/M4）
+          - runner: macos-15
+            label: AppleSilicon
+          # Intel（注意：macos-13 已于 2026 年退役，Intel 只能用 -intel 后缀标签）
+          - runner: macos-15-intel
+            label: Intel
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: 校验 tkinter（官方 macOS 构建自带 Tk）
+        run: |
+          python3 -V
+          python3 -c "import tkinter; print('tkinter', tkinter.TkVersion)"
+          echo "架构：$(uname -m)"
+
+      - name: 执行打包
+        run: |
+          chmod +x build_mac.sh
+          ./build_mac.sh
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDFOCR-macOS-${{ matrix.label }}
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 30

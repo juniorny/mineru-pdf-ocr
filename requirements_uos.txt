@@ -1,0 +1,32 @@
+# ============================================================
+#  PDF批量OCR工具 —— Linux / 统信 UOS 依赖锁定
+# ------------------------------------------------------------
+#  用「环境标记」自动适配不同 Python 版本：
+#    · 统信 UOS V20 自带 Python 3.7（Debian buster 软件包系）
+#    · 较新的发行版通常自带 3.8+
+#
+#  关键点：PyInstaller 6.x 已不再支持 Python 3.7，
+#         因此在 3.7 上必须回退到 5.13.2（最后一个支持的版本）。
+#         同理 requests / python-docx / pillow / lxml 都做了版本分叉。
+# ============================================================
+
+# ------------------------- 打包工具 -------------------------
+pyinstaller==5.13.2;   python_version <  "3.8"
+pyinstaller>=6.0,<7;   python_version >= "3.8"
+
+# ------------------------- 运行依赖 -------------------------
+requests==2.31.0;      python_version <  "3.8"
+requests>=2.32;        python_version >= "3.8"
+
+# PyPDF2 3.0.1 支持 Python 3.6+，无需分叉
+PyPDF2==3.0.1
+
+python-docx==1.1.2;    python_version <  "3.8"
+python-docx>=1.1.2;    python_version >= "3.8"
+
+# python-docx 依赖 lxml 读写 docx
+lxml==4.9.4;           python_version <  "3.8"
+lxml>=5.0;             python_version >= "3.8"
+
+pillow==9.5.0;         python_version <  "3.8"
+pillow>=10.0;          python_version >= "3.8"
