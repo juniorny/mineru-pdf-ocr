@@ -60,7 +60,7 @@ fi
 echo "    tkinter：$("$PYTHON_BIN" -c 'import tkinter;print(tkinter.TkVersion)')"
 
 # ------------------------------------------------------------ 2. 虚拟环境
-say "2/6 准备打包环境（$VENV_DIR）"
+say "2/6 准备打包环境（${VENV_DIR}）"
 if [ ! -x "$VENV_DIR/bin/python" ]; then
     "$PYTHON_BIN" -m venv "$VENV_DIR"
 fi

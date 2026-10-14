@@ -80,7 +80,7 @@ echo "    tkinter：$("$PY" -c 'import tkinter;print(tkinter.TkVersion)')"
 echo "    Python：$PY_VER"
 
 # ------------------------------------------------------------ 2. 虚拟环境
-say "2/6 准备虚拟环境（$VENV_DIR）"
+say "2/6 准备虚拟环境（${VENV_DIR}）"
 if [ ! -x "$VENV_DIR/bin/python" ]; then
     if ! "$PY" -m venv "$VENV_DIR" 2>/dev/null; then
         die "创建虚拟环境失败，通常是缺少 python3-venv。请执行：
